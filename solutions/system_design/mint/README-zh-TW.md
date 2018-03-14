@@ -184,11 +184,11 @@ FOREIGN KEY(user_id) REFERENCES users(id)
 
 我們可以建立 [索引](https://github.com/kevingo/system-design-primer-zh-tw/blob/master/README-zh-TW.md#%E4%BD%BF%E7%94%A8%E6%AD%A3%E7%A2%BA%E7%9A%84%E7%B4%A2%E5%BC%95) 在 `id` 和 `user_id` 欄位。
 
-#### Category service
+#### 類別服務
 
-For the **Category Service**, we can seed a seller-to-category dictionary with the most popular sellers.  If we estimate 50,000 sellers and estimate each entry to take less than 255 bytes, the dictionary would only take about 12 MB of memory.
+對於**類別服務**來說，我們可以提供一個「賣家與類別」對應的對應表，當中列出熱門的賣家。如果我們預估有 50000 個賣家，並且每個項目會使用少於 255 bytes，那整個對應表也僅僅需要 12 MB 的記憶體空間。
 
-**Clarify with your interviewer how much code you are expected to write**.
+**向你的面試者詢問他預期你的程式碼要寫到什麼程度**.
 
 ```
 class DefaultCategories(Enum):
@@ -205,7 +205,7 @@ seller_category_map['Target'] = DefaultCategories.SHOPPING
 ...
 ```
 
-For sellers not initially seeded in the map, we could use a crowdsourcing effort by evaluating the manual category overrides our users provide.  We could use a heap to quickly lookup the top manual override per seller in O(1) time.
+對於那些最初沒有被挑中的賣家來說，我們可以藉由手動的方式讓使用者覆蓋掉我們的設定。使用 heap 可以在 O(1) 的時間內挑出前幾名的賣家。
 
 ```
 class Categorizer(object):
@@ -225,7 +225,7 @@ class Categorizer(object):
         return None
 ```
 
-Transaction implementation:
+交易的實作部分：
 
 ```
 class Transaction(object):
